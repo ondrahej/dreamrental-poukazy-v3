@@ -827,3 +827,15 @@ html.je-okno{overflow:hidden}
 .polozky.je-zablesk-seznam{animation:zablesk-seznam 1.6s ease}
 @keyframes zablesk-seznam{0%,40%{box-shadow:0 0 0 6px rgba(201,154,62,.4);border-radius:var(--r-s)}100%{box-shadow:0 0 0 0 rgba(201,154,62,0)}}
 @media (max-width:40rem){.pole__dva{grid-template-columns:1fr}}
+
+/* visačky na girlandě přes celou šířku; délku provázku a výšku zavěšení počítá skript */
+.postup__provazek{width:100vw;max-width:none;margin-left:calc(50% - 50vw);height:3.75rem}
+.visacky{margin-top:0;align-items:start}
+.visacka,.visacka:nth-child(n){margin-top:var(--visi,2.4rem);transform-origin:50% calc(var(--nit,2.4rem) * -1)}
+.visacka::before{height:calc(var(--nit,2.4rem) + 1.55rem)}
+.visacky{position:relative;margin-top:-3.75rem}
+@media (max-width:40rem){
+  .visacky{margin-top:1rem}
+  .visacka,.visacka:nth-child(n){--visi:2.4rem;--nit:2.4rem}
+}
+.visacka::before{width:2px;margin-left:-1px}

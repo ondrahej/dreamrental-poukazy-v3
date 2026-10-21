@@ -53,6 +53,34 @@
     if (dojed(a.getAttribute('href').slice(1))) { e.preventDefault(); history.replaceState(null, '', a.getAttribute('href')); }
   });
 
+  // visačky „Jak to probíhá“: provázek každé visačky začíná přesně na girlandě (girlanda je křivka přes celou šířku)
+  var provazek = document.querySelector('.postup__provazek');
+  var visacky = [].slice.call(document.querySelectorAll('.visacka'));
+  var MEZERA = [2.4, 4.4, 2.4];
+  function zavesVisacky() {
+    if (!provazek || !visacky.length) return;
+    var rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    var pr = provazek.getBoundingClientRect();
+    var viditelny = pr.width > 0 && getComputedStyle(provazek).display !== 'none';
+    var seznamTop = visacky[0].parentElement.getBoundingClientRect().top;
+    visacky.forEach(function (v, i) {
+      var nit = (viditelny ? MEZERA[i % 3] : 2.4) * rem, visi = nit;
+      if (viditelny) {
+        var r = v.getBoundingClientRect();
+        var t = (r.left + r.width / 2 - pr.left) / pr.width;               // křivka M0 6 Q600 70 1200 6: x roste lineárně s t
+        var yJednotky = 6 * (1 - t) * (1 - t) + 140 * t * (1 - t) + 6 * t * t;
+        var lano = pr.top + yJednotky * pr.height / 60 - seznamTop;          // výška girlandy nad horním okrajem seznamu
+        visi = lano + nit;
+      }
+      v.style.setProperty('--visi', visi + 'px');
+      v.style.setProperty('--nit', nit + 'px');
+    });
+  }
+  zavesVisacky();
+  window.addEventListener('resize', zavesVisacky);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zavesVisacky);
+  window.addEventListener('load', zavesVisacky);
+
   // flotila: šipky posouvají pás o kartu
   var pas = document.querySelector('.flotila__pas');
   document.querySelectorAll('[data-posun]').forEach(function (b) {
