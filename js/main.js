@@ -119,7 +119,8 @@
     if (katalog[klic]) return;
     katalog[klic] = { klic: klic, nazev: el.dataset.nazev, cena: +el.dataset.cena, bezne: +el.dataset.bezne, foto: el.dataset.foto };
   });
-  var FOTO_CASTKA = 'img/darek-mrak.webp';
+  // stejná cesta k obrázkům jako u aut (na stránce firmy /nazev-firmy/ jsou cesty od kořene)
+  var FOTO_CASTKA = ((document.querySelector('[data-foto]') || {}).getAttribute ? document.querySelector('[data-foto]').getAttribute('data-foto').replace(/img\/[^/]*$/, '') : '') + 'img/darek-mrak.webp';
 
   // položky v košíku: tři dárky jsou vždy vidět (i s nulou), ostatní se přidávají
   var polozky = ['sportovni', 'cybertruck', 'premiova'].map(function (kl) {

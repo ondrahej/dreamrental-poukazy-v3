@@ -847,3 +847,5 @@ html.je-okno{overflow:hidden}
 .pole__dva > label,.pole > label{min-width:0}
 .pole:has(.polozky) .pole__nadpis{margin-bottom:0}
 .polozka.je-nahled:not(.je-vybrano){border-color:var(--linka);box-shadow:none}
+/* Safari kreslí drop-shadow na řadě mraků jako černý čtverec v rohu stránky, stín proto vypnutý */
+.uvod__mraky img{filter:none}
