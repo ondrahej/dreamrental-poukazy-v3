@@ -117,7 +117,7 @@
     </div>
 
     <form class="formular" id="formular" novalidate>
-      <fieldset class="pole"><legend>1. Které poukazy a kolik</legend>
+      <div class="pole" role="group"><p class="pole__nadpis">1. Které poukazy a kolik</p>
         <p class="pole__napoveda">Kombinujte, jak chcete. Každý poukaz může být na jiné auto.</p>
         <ul class="polozky" id="polozky" role="list"></ul>
         <div class="pridat">
@@ -132,7 +132,7 @@
             <span class="pridat__ovladani"><span class="vstup vstup--kc"><input type="number" id="castka" min="500" max="200000" step="500" value="5000" inputmode="numeric"><i>Kč</i></span><button type="button" class="pridat__tlacitko" id="pridat-castku">Přidat</button></span>
           </label>
         </div>
-      </fieldset><fieldset class="pole"><legend>2. Věnování a logo <small class="pole__nepovinne">nepovinné</small></legend>
+      </div><div class="pole" role="group"><p class="pole__nadpis">2. Věnování a logo <small class="pole__nepovinne">nepovinné</small></p>
         <label>Od koho (na poukaz)
           <span class="vstup"><input type="text" name="firma" maxlength="48" placeholder="např. Novák &amp; syn s.r.o." autocomplete="organization"></span>
         </label>
@@ -148,7 +148,7 @@
           <input type="file" name="logo" accept="image/png,image/jpeg,image/svg+xml,image/webp"><span class="nahrat__ikona" aria-hidden="true">+</span>
           <span><b>Přidat logo do náhledu</b><small>Zůstane jen ve vašem prohlížeči, nikam se neodesílá.</small></span>
         </label>
-      </fieldset><fieldset class="pole pole--kontakt"><legend>3. Kam vám pošleme nabídku</legend>
+      </div><div class="pole pole--kontakt" role="group"><p class="pole__nadpis">3. Kam vám pošleme nabídku</p>
         <div class="pole__dva">
           <label>Jméno a příjmení
             <span class="vstup"><input type="text" name="jmeno" required maxlength="80" autocomplete="name"></span>
@@ -159,15 +159,15 @@
           <label>E-mail
             <span class="vstup"><input type="email" name="email" required maxlength="120" autocomplete="email" inputmode="email"></span>
           </label>
-          <label>Telefon <small>nepovinné</small>
+          <label><span>Telefon <small>nepovinné</small></span>
             <span class="vstup"><input type="tel" name="telefon" maxlength="30" autocomplete="tel" inputmode="tel"></span>
           </label>
         </div>
-        <label>Poznámka <small>nepovinné</small>
+        <label><span>Poznámka <small>nepovinné</small></span>
           <span class="vstup"><textarea name="poznamka" rows="2" maxlength="600" placeholder="Např. termín předání, tištěné poukazy, faktura na jinou firmu"></textarea></span>
         </label>
         <p class="pole__chyba" data-chyba hidden></p>
-      </fieldset><div class="souhrn" aria-live="polite">
+      </div><div class="souhrn" aria-live="polite">
         <ul class="souhrn__polozky" data-s="polozky" role="list"></ul>
         <p class="souhrn__radek"><span data-s="kusu">Zatím žádný poukaz</span><span data-s="celkem" class="souhrn__celkem">0 Kč</span></p>
         <p class="souhrn__pozn" data-s="pozn">včetně DPH</p>

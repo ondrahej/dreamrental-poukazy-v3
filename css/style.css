@@ -839,3 +839,11 @@ html.je-okno{overflow:hidden}
   .visacka,.visacka:nth-child(n){--visi:2.4rem;--nit:2.4rem}
 }
 .visacka::before{width:2px;margin-left:-1px}
+
+/* kroky konfigurátoru bez fieldset/legend (Safari je skládá jinak) */
+.pole__nadpis{font:500 1.15rem/1.2 var(--f-d);color:var(--ink);margin:0 0 .2rem}
+.pole label > span:first-child small{margin-left:.35rem}
+.vstup input,.vstup textarea,.vstup select{width:100%;min-width:0;box-sizing:border-box}
+.pole__dva > label,.pole > label{min-width:0}
+.pole:has(.polozky) .pole__nadpis{margin-bottom:0}
+.polozka.je-nahled:not(.je-vybrano){border-color:var(--linka);box-shadow:none}
