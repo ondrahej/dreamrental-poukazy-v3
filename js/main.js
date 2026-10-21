@@ -25,16 +25,33 @@
     im.addEventListener('error', hotovo, { once: true });
   });
 
-  // odpočet do Štědrého dne v štítku úvodu
+  // odpočet do Štědrého dne: vždy z dnešního data, o půlnoci se přepočítá; po Štědrém dni zmizí
   var odpocet = document.querySelector('[data-odpocet]');
-  if (odpocet) {
+  function odpocitej() {
     var dnes = new Date(); dnes.setHours(0, 0, 0, 0);
     var dni = Math.round((new Date(dnes.getFullYear(), 11, 24) - dnes) / 864e5);
-    if (dni > 0) {
-      odpocet.textContent = 'do Štědrého dne ' + (dni === 1 ? 'zbývá 1 den' : dni < 5 ? 'zbývají ' + dni + ' dny' : 'zbývá ' + dni + ' dní');
-      odpocet.hidden = false;
-    }
+    odpocet.hidden = dni < 0;
+    odpocet.textContent = dni === 0 ? 'Štědrý den je dnes' : 'do Štědrého dne ' + (dni === 1 ? 'zbývá 1 den' : dni < 5 ? 'zbývají ' + dni + ' dny' : 'zbývá ' + dni + ' dní');
+    var pulnoc = new Date(dnes); pulnoc.setDate(pulnoc.getDate() + 1);
+    setTimeout(odpocitej, pulnoc - new Date() + 1000);
   }
+  if (odpocet) odpocitej();
+
+  // odkazy uvnitř stránky: dojet rovnou na obsah sekce (ne na její horní okraj), pod pevnou hlavičku
+  var CILE = { poukaz: '.poukaz__in', darky: '.darky .sekce__hlava', postup: '.postup__in', otazky: '.otazky__in', kontakt: '.brana__in', flotila: '.flotila .sekce__hlava', recenze: '.recenze__in' };
+  function dojed(id) {
+    var sekce = document.getElementById(id);
+    if (!sekce) return false;
+    var cil = (CILE[id] && document.querySelector(CILE[id])) || sekce;
+    var y = cil.getBoundingClientRect().top + window.scrollY - hlavicka.offsetHeight - (id === 'poukaz' ? 24 : 8);
+    window.scrollTo({ top: Math.max(0, y), behavior: klid ? 'auto' : 'smooth' });
+    return true;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a || a.getAttribute('href').length < 2) return;
+    if (dojed(a.getAttribute('href').slice(1))) { e.preventDefault(); history.replaceState(null, '', a.getAttribute('href')); }
+  });
 
   // flotila: šipky posouvají pás o kartu
   var pas = document.querySelector('.flotila__pas');
@@ -75,7 +92,7 @@
     if (katalog[klic]) return;
     katalog[klic] = { klic: klic, nazev: el.dataset.nazev, cena: +el.dataset.cena, bezne: +el.dataset.bezne, foto: el.dataset.foto };
   });
-  var FOTO_CASTKA = 'img/auta-porsche-gt4-mr-800.webp';
+  var FOTO_CASTKA = 'img/darek-mrak.webp';
 
   // položky v košíku: tři dárky jsou vždy vidět (i s nulou), ostatní se přidávají
   var polozky = ['sportovni', 'cybertruck', 'premiova'].map(function (kl) {
@@ -146,7 +163,8 @@
       var foto = k('foto');
       posledniFoto = n.foto;
       foto.classList.add('je-zmena');
-      setTimeout(function () { foto.src = posledniFoto; foto.onload = function () { foto.classList.remove('je-zmena'); }; }, 250);
+      var jeDarek = !!n.castka;
+      setTimeout(function () { foto.classList.toggle('karta__auto--darek', jeDarek); foto.src = posledniFoto; foto.onload = function () { foto.classList.remove('je-zmena'); }; }, 250);
     }
     volbyNahledu.innerHTML = '';
     if (vybrane.length > 1) {
@@ -305,7 +323,9 @@
       var p = najdi(b.dataset.vybrat);
       if (!p.pocet) p.pocet = 1;
       nahled = p.klic; vykresli();
-      document.getElementById('poukaz').scrollIntoView({ behavior: klid ? 'auto' : 'smooth' });
+      dojed('poukaz');
+      var radekNahled = seznam.querySelector('.je-nahled');
+      if (radekNahled) { radekNahled.classList.add('je-zablesk'); setTimeout(function () { radekNahled.classList.remove('je-zablesk'); }, 1600); }
     });
   });
 
