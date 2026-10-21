@@ -706,3 +706,69 @@ img.ceka{opacity:0!important}
   .polozka{padding-left:.75rem}
   .oznameni{width:calc(100% - 2rem);justify-content:space-between}
 }
+
+/* ===== výběr auta z flotily: tlačítko a okno ===== */
+.pridat__flotila{display:flex;align-items:center;gap:1rem;width:100%;padding:.7rem .7rem .7rem .8rem;border:1px solid var(--linka);border-radius:var(--r-s);background:#fff;text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.pridat__flotila:hover{border-color:var(--ink);box-shadow:0 10px 24px -14px rgba(15,25,50,.35)}
+.pridat__nahledy{display:flex;flex:none}
+.pridat__nahledy img{width:3.4rem;height:2.4rem;object-fit:contain;padding:.15rem;border-radius:10px;background:radial-gradient(70% 70% at 50% 40%,#2c3f7a,#121a33);box-shadow:0 0 0 2px #fff}
+.pridat__nahledy img + img{margin-left:-1.1rem}
+.pridat__popis{display:grid;flex:1;min-width:0}
+.pridat__popis b{font:500 1.02rem/1.25 var(--f-d);color:var(--ink)}
+.pridat__popis small{font-size:.84rem;color:var(--ink-3)}
+.pridat__flotila .sipka{background:var(--ink);width:2rem;height:2rem}
+.pridat__flotila .sipka::before{background:#fff}
+.pridat__flotila:hover .sipka{transform:translateX(3px)}
+
+html.je-okno{overflow:hidden}
+.vyber{width:min(64rem,calc(100% - 2rem));max-height:min(52rem,calc(100dvh - 2rem));padding:0;border:0;border-radius:26px;background:var(--krem);color:var(--ink);box-shadow:0 40px 100px -20px rgba(6,10,25,.6);display:none;flex-direction:column;overflow:hidden}
+.vyber[open]{display:flex;animation:vyber-in .35s cubic-bezier(.2,.8,.2,1)}
+.vyber.je-zavirani{animation:vyber-out .2s ease forwards}
+.vyber::backdrop{background:rgba(9,13,30,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+@keyframes vyber-in{from{opacity:0;transform:translateY(24px) scale(.98)}}
+@keyframes vyber-out{to{opacity:0;transform:translateY(16px) scale(.98)}}
+.vyber__hlava{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.6rem 1.75rem .9rem;background:radial-gradient(80% 140% at 85% 0%,#2d3f72 0%,transparent 60%),linear-gradient(160deg,var(--noc-2),var(--noc));color:#fff}
+.vyber__nadtitul{font:500 .78rem/1 var(--f-d);letter-spacing:.14em;text-transform:uppercase;color:var(--zlato-2);margin-bottom:.55rem}
+.vyber h2{font-size:clamp(1.6rem,1.2rem + 1.4vw,2.3rem)}
+.vyber__zavrit{flex:none;width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer}
+.vyber__zavrit:hover{background:#fff;color:var(--ink)}
+.vyber__filtry{display:flex;gap:.45rem;overflow-x:auto;padding:1rem 1.75rem;background:var(--noc);scrollbar-width:none;flex:none}
+.vyber__filtry button{flex:none;min-height:2.5rem;padding:0 1.05rem;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font:500 .9rem/1 var(--f-d);cursor:pointer}
+.vyber__filtry button[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:#fff}
+.vyber__mrizka{list-style:none;margin:0;padding:1.5rem 1.75rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(14.5rem,1fr));gap:1rem;overflow-y:auto;flex:1;overscroll-behavior:contain}
+.vyber__auto{display:flex;flex-direction:column;border-radius:18px;background:#fffdf9;box-shadow:0 1px 2px rgba(60,40,10,.06),0 14px 30px -20px rgba(30,40,80,.35);overflow:hidden;transition:box-shadow .25s,transform .25s}
+.vyber__auto:hover{transform:translateY(-2px)}
+.vyber__auto.je-vybrano{box-shadow:0 0 0 2px var(--zlato) ,0 14px 30px -20px rgba(30,40,80,.35)}
+.vyber__foto{position:relative;padding:1.4rem .9rem .9rem;background:radial-gradient(58% 13% at 50% 86%,rgba(4,8,22,.55),transparent 72%),radial-gradient(130% 34% at 50% 100%,#f4f6fb 0%,#d9e0ee 40%,rgba(160,176,212,0) 72%),radial-gradient(70% 60% at 50% 18%,#2c3f7a 0%,transparent 70%),linear-gradient(180deg,#0d1430,#1a2654 70%,#2a3a6e)}
+.vyber__foto img{width:100%;aspect-ratio:2.05;object-fit:contain;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.vyber__auto:hover .vyber__foto img{transform:scale(1.04)}
+.vyber__pocet{position:absolute;top:.7rem;right:.7rem;padding:.35rem .65rem;border-radius:999px;background:linear-gradient(180deg,#f8e2a8,var(--zlato-2));color:var(--ink);font:500 .78rem/1 var(--f-d)}
+.vyber__text{display:flex;justify-content:space-between;align-items:flex-end;gap:.6rem;padding:.9rem 1rem .4rem}
+.vyber__text small{display:block;font:500 .72rem/1.3 var(--f-t);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.vyber__text p:first-child b{font:500 1.15rem/1.2 var(--f-d)}
+.vyber__cena{text-align:right;font-size:.78rem;color:var(--ink-3);flex:none}
+.vyber__cena b{display:block;font:500 1rem/1.2 var(--f-d);color:var(--ink)}
+.vyber__akce{padding:.5rem 1rem 1rem;margin-top:auto}
+.vyber__pridat{width:100%;min-height:2.75rem;border-radius:999px;border:1px solid var(--ink);background:transparent;font:500 .95rem/1 var(--f-d);cursor:pointer;transition:background .2s,color .2s}
+.vyber__pridat:hover{background:var(--ink);color:#fff}
+.vyber__krok{display:flex;align-items:center;justify-content:space-between;min-height:2.75rem;border-radius:999px;background:var(--ink);color:#fff;padding:0 .25rem}
+.vyber__krok button{width:2.4rem;height:2.4rem;border:0;border-radius:50%;background:none;color:#fff;font-size:1.25rem;cursor:pointer}
+.vyber__krok button:hover{background:rgba(255,255,255,.15)}
+.vyber__krok output{font:500 1.05rem/1 var(--f-d)}
+.vyber__pata{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:1rem 1.75rem calc(1rem + env(safe-area-inset-bottom,0px));border-top:1px solid var(--linka);background:#fffdf9;flex:none}
+.vyber__pata p{color:var(--ink-2);font-size:.95rem}
+@media (max-width:40rem){
+  .vyber{width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:24px 24px 0 0}
+  @keyframes vyber-in{from{transform:translateY(100%)}}
+  .vyber__hlava,.vyber__filtry,.vyber__mrizka,.vyber__pata{padding-left:1.1rem;padding-right:1.1rem}
+  .vyber__mrizka{grid-template-columns:1fr 1fr;gap:.7rem}
+  .vyber__text{flex-direction:column;align-items:flex-start;gap:.3rem;padding:.7rem .75rem .3rem}
+  .vyber__cena{text-align:left}
+  .vyber__text p:first-child b{font-size:1rem}
+  .vyber__akce{padding:.4rem .75rem .8rem}
+  .vyber__pocet{font-size:.7rem;top:.5rem;right:.5rem}
+  .vyber__pata .tlacitko{width:100%;justify-content:space-between}
+}
+.vyber__mrizka{grid-auto-rows:max-content;align-content:start;min-height:0}
+.vyber__auto{overflow:visible}
+.vyber__foto{border-radius:18px 18px 0 0;overflow:hidden}

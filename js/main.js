@@ -196,11 +196,77 @@
   f.addEventListener('submit', function (e) { e.preventDefault(); });
   poptat.addEventListener('click', function (e) { if (poptat.classList.contains('je-neaktivni')) e.preventDefault(); });
 
-  document.getElementById('pridat-auto').addEventListener('click', function () {
-    var v = document.getElementById('vyber-auto');
-    if (!v.value) { v.focus(); return; }
-    pridej(v.value); v.value = '';
+
+  // VÝBĚR AUTA: okno s fotkami celé flotily, auta se přidávají rovnou tady
+  var okno = document.createElement('dialog');
+  okno.className = 'vyber';
+  okno.setAttribute('aria-labelledby', 'vyber-nadpis');
+  var kategorie = ['Vše'];
+  var auta = [].slice.call(document.querySelectorAll('.flotila [data-auto]'));
+  auta.forEach(function (el) { if (kategorie.indexOf(el.dataset.kat) < 0) kategorie.push(el.dataset.kat); });
+  okno.innerHTML =
+    '<div class="vyber__hlava"><div><p class="vyber__nadtitul">Poukaz na konkrétní auto</p><h2 id="vyber-nadpis">Vyberte auto z flotily</h2></div>' +
+      '<button type="button" class="vyber__zavrit" data-zavrit aria-label="Zavřít">×</button></div>' +
+    '<div class="vyber__filtry" role="group" aria-label="Typ auta">' + kategorie.map(function (c, i) {
+      return '<button type="button" data-kat="' + c + '" aria-pressed="' + (i === 0) + '">' + c + '</button>'; }).join('') + '</div>' +
+    '<ul class="vyber__mrizka" role="list"></ul>' +
+    '<div class="vyber__pata"><p data-vyber-souhrn></p><button type="button" class="tlacitko" data-zavrit>Hotovo <span class="sipka" aria-hidden="true"></span></button></div>';
+  document.body.appendChild(okno);
+  var mrizka = okno.querySelector('.vyber__mrizka');
+  auta.forEach(function (el) {
+    var klic = el.dataset.auto === 'tesla-cybertruck' ? 'cybertruck' : el.dataset.auto;
+    var a = katalog[klic];
+    var znacka = el.querySelector('small').textContent;
+    var li = document.createElement('li');
+    li.className = 'vyber__auto'; li.dataset.kat = el.dataset.kat; li.dataset.klic = klic;
+    li.innerHTML = '<div class="vyber__foto"><img src="' + a.foto + '" alt="" loading="lazy" width="400" height="200"><span class="vyber__pocet" hidden></span></div>' +
+      '<div class="vyber__text"><p><small></small><b></b></p><p class="vyber__cena"><b></b><s></s></p></div>' +
+      '<div class="vyber__akce"><button type="button" class="vyber__pridat" data-plus><span aria-hidden="true">+</span> Přidat</button>' +
+      '<span class="vyber__krok" hidden><button type="button" data-minus aria-label="O jeden méně">−</button><output></output><button type="button" data-plus aria-label="O jeden víc">+</button></span></div>';
+    li.querySelector('.vyber__text small').textContent = znacka;
+    li.querySelector('.vyber__text b').textContent = el.querySelector('.auto__radek p').lastChild.textContent;
+    li.querySelector('.vyber__cena b').textContent = kc(a.cena);
+    li.querySelector('.vyber__cena s').textContent = kc(a.bezne);
+    li.querySelectorAll('[data-plus]').forEach(function (b) { b.addEventListener('click', function () { pridej(klic); obnovOkno(); }); });
+    li.querySelector('[data-minus]').addEventListener('click', function () {
+      var p = najdi(klic); if (!p) return;
+      p.pocet = Math.max(0, p.pocet - 1);
+      if (!p.pocet && !p.pevna) polozky.splice(polozky.indexOf(p), 1);
+      vykresli(); obnovOkno();
+    });
+    mrizka.appendChild(li);
   });
+  function obnovOkno() {
+    var celkem = 0;
+    mrizka.querySelectorAll('.vyber__auto').forEach(function (li) {
+      var p = najdi(li.dataset.klic), n = p ? p.pocet : 0;
+      li.classList.toggle('je-vybrano', n > 0);
+      li.querySelector('.vyber__pridat').hidden = n > 0;
+      li.querySelector('.vyber__krok').hidden = !n;
+      li.querySelector('output').textContent = n;
+      var odznak = li.querySelector('.vyber__pocet');
+      odznak.hidden = !n; odznak.textContent = n + '× v poukazech';
+      celkem += n;
+    });
+    okno.querySelector('[data-vyber-souhrn]').textContent = celkem ? 'V poukazech máte z flotily ' + celkem + ' ' + slovo(celkem) : 'Klikněte na Přidat u auta, které chcete darovat.';
+  }
+  okno.querySelectorAll('.vyber__filtry button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      okno.querySelectorAll('.vyber__filtry button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      mrizka.querySelectorAll('.vyber__auto').forEach(function (li) { li.hidden = b.dataset.kat !== 'Vše' && li.dataset.kat !== b.dataset.kat; });
+    });
+  });
+  function zavri() { okno.classList.add('je-zavirani'); setTimeout(function () { okno.close(); okno.classList.remove('je-zavirani'); }, 200); }
+  okno.querySelectorAll('[data-zavrit]').forEach(function (b) { b.addEventListener('click', zavri); });
+  okno.addEventListener('click', function (e) { if (e.target === okno) zavri(); });
+  okno.addEventListener('close', function () { document.documentElement.classList.remove('je-okno'); });
+  document.getElementById('otevrit-flotilu').addEventListener('click', function () {
+    obnovOkno();
+    document.documentElement.classList.add('je-okno');
+    okno.showModal();
+    mrizka.scrollTop = 0;
+  });
+
   document.getElementById('pridat-castku').addEventListener('click', function () {
     var c = document.getElementById('castka');
     var hodnota = Math.round((parseInt(c.value, 10) || 0) / 100) * 100;

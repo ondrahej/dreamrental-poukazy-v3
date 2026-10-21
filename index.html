@@ -121,9 +121,13 @@
         <p class="pole__napoveda">Kombinujte, jak chcete. Každý poukaz může být na jiné auto.</p>
         <ul class="polozky" id="polozky" role="list"></ul>
         <div class="pridat">
-          <label class="pridat__radek"><span>Poukaz na jiné auto</span>
-            <span class="pridat__ovladani"><span class="vstup vstup--vyber"><select id="vyber-auto"><option value="">Vyberte auto z flotily</option><option value="porsche-gt4-mr">Porsche Cayman GT4 MR · 7 590 Kč</option><option value="audi-r8">Audi R8 · 7 590 Kč</option><option value="mercedes-amg-gt-63s">Mercedes-AMG GT 63 S · 5 500 Kč</option><option value="bmw-m2">BMW M2 · 4 740 Kč</option><option value="alpine-a110-gts">Alpine A110 GTS · 5 240 Kč</option><option value="mercedes-amg-sl43">Mercedes-AMG SL43 · 5 310 Kč</option><option value="bmw-m4-cabrio">BMW M4 Cabrio · 5 690 Kč</option><option value="mercedes-amg-g63">Mercedes-AMG G63 · 9 490 Kč</option><option value="bmw-m5">BMW M5 · 9 490 Kč</option><option value="audi-rs6">Audi RS6 · 10 440 Kč</option><option value="c63-se">Mercedes-AMG C63 S E Performance · 4 550 Kč</option><option value="bmw-m3-competition">BMW M3 Competition · 6 640 Kč</option><option value="dodge-challenger">Dodge Challenger · 3 310 Kč</option><option value="bmw-x6">BMW X6 · 5 690 Kč</option><option value="mercedes-c63">Mercedes-AMG C63 · 4 740 Kč</option><option value="volkswagen-golf-r">Volkswagen Golf R · 4 740 Kč</option><option value="mercedes-a35-amg">Mercedes-AMG A35 · 5 690 Kč</option></select></span><button type="button" class="pridat__tlacitko" id="pridat-auto">Přidat</button></span>
-          </label>
+          <div class="pridat__radek"><span>Poukaz na jiné auto</span>
+            <button type="button" class="pridat__flotila" id="otevrit-flotilu" aria-haspopup="dialog">
+              <span class="pridat__nahledy" aria-hidden="true"><img src="img/auta-porsche-gt4-mr-480.webp" alt=""><img src="img/auta-mercedes-amg-g63-480.webp" alt=""><img src="img/auta-audi-r8-480.webp" alt=""></span>
+              <span class="pridat__popis"><b>Vybrat auto z flotily</b><small>18 aut s fotkou a cenou</small></span>
+              <span class="sipka" aria-hidden="true"></span>
+            </button>
+          </div>
           <label class="pridat__radek"><span>Poukaz na částku, auto si vyberou sami</span>
             <span class="pridat__ovladani"><span class="vstup vstup--kc"><input type="number" id="castka" min="500" max="200000" step="500" value="5000" inputmode="numeric"><i>Kč</i></span><button type="button" class="pridat__tlacitko" id="pridat-castku">Přidat</button></span>
           </label>
@@ -174,7 +178,7 @@
     </div>
   </div>
   <ul class="flotila__pas" role="list" tabindex="0" aria-label="Auta ve flotile">
-    <li class="auto" data-auto="tesla-cybertruck" data-nazev="Den s Tesla Cybertruck" data-cena="10440" data-bezne="10990" data-foto="img/auta-tesla-cybertruck-800.webp">
+    <li class="auto" data-auto="tesla-cybertruck" data-kat="Elektromobil" data-nazev="Den s Tesla Cybertruck" data-cena="10440" data-bezne="10990" data-foto="img/auta-tesla-cybertruck-800.webp">
       <div class="auto__foto"><img src="img/auta-tesla-cybertruck-800.webp" srcset="img/auta-tesla-cybertruck-480.webp 480w, img/auta-tesla-cybertruck-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1102" height="592" alt="Tesla Cybertruck" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Tesla</small>Cybertruck</p>
@@ -182,7 +186,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="tesla-cybertruck" aria-label="Přidat poukaz na Tesla Cybertruck"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="porsche-gt4-mr" data-nazev="Den s Porsche Cayman GT4 MR" data-cena="7590" data-bezne="7990" data-foto="img/auta-porsche-gt4-mr-800.webp">
+    <li class="auto" data-auto="porsche-gt4-mr" data-kat="Sportovní" data-nazev="Den s Porsche Cayman GT4 MR" data-cena="7590" data-bezne="7990" data-foto="img/auta-porsche-gt4-mr-800.webp">
       <div class="auto__foto"><img src="img/auta-porsche-gt4-mr-800.webp" srcset="img/auta-porsche-gt4-mr-480.webp 480w, img/auta-porsche-gt4-mr-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1115" height="516" alt="Porsche Cayman GT4 MR" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Porsche</small>Cayman GT4 MR</p>
@@ -190,7 +194,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="porsche-gt4-mr" aria-label="Přidat poukaz na Porsche Cayman GT4 MR"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="audi-r8" data-nazev="Den s Audi R8" data-cena="7590" data-bezne="7990" data-foto="img/auta-audi-r8-800.webp">
+    <li class="auto" data-auto="audi-r8" data-kat="Sportovní" data-nazev="Den s Audi R8" data-cena="7590" data-bezne="7990" data-foto="img/auta-audi-r8-800.webp">
       <div class="auto__foto"><img src="img/auta-audi-r8-800.webp" srcset="img/auta-audi-r8-480.webp 480w, img/auta-audi-r8-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1191" height="566" alt="Audi R8" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Audi</small>R8</p>
@@ -198,7 +202,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="audi-r8" aria-label="Přidat poukaz na Audi R8"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="mercedes-amg-gt-63s" data-nazev="Den s Mercedes-AMG GT 63 S" data-cena="5500" data-bezne="5790" data-foto="img/auta-mercedes-amg-gt-63s-800.webp">
+    <li class="auto" data-auto="mercedes-amg-gt-63s" data-kat="Sportovní" data-nazev="Den s Mercedes-AMG GT 63 S" data-cena="5500" data-bezne="5790" data-foto="img/auta-mercedes-amg-gt-63s-800.webp">
       <div class="auto__foto"><img src="img/auta-mercedes-amg-gt-63s-800.webp" srcset="img/auta-mercedes-amg-gt-63s-480.webp 480w, img/auta-mercedes-amg-gt-63s-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1185" height="555" alt="Mercedes-AMG GT 63 S" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Mercedes-AMG</small>GT 63 S</p>
@@ -206,7 +210,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="mercedes-amg-gt-63s" aria-label="Přidat poukaz na Mercedes-AMG GT 63 S"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="bmw-m2" data-nazev="Den s BMW M2" data-cena="4740" data-bezne="4990" data-foto="img/auta-bmw-m2-800.webp">
+    <li class="auto" data-auto="bmw-m2" data-kat="Sportovní" data-nazev="Den s BMW M2" data-cena="4740" data-bezne="4990" data-foto="img/auta-bmw-m2-800.webp">
       <div class="auto__foto"><img src="img/auta-bmw-m2-800.webp" srcset="img/auta-bmw-m2-480.webp 480w, img/auta-bmw-m2-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1056" height="558" alt="BMW M2" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>BMW</small>M2</p>
@@ -214,7 +218,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="bmw-m2" aria-label="Přidat poukaz na BMW M2"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="alpine-a110-gts" data-nazev="Den s Alpine A110 GTS" data-cena="5240" data-bezne="5517" data-foto="img/auta-alpine-a110-gts-800.webp">
+    <li class="auto" data-auto="alpine-a110-gts" data-kat="Sportovní" data-nazev="Den s Alpine A110 GTS" data-cena="5240" data-bezne="5517" data-foto="img/auta-alpine-a110-gts-800.webp">
       <div class="auto__foto"><img src="img/auta-alpine-a110-gts-800.webp" srcset="img/auta-alpine-a110-gts-480.webp 480w, img/auta-alpine-a110-gts-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1188" height="542" alt="Alpine A110 GTS" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Alpine</small>A110 GTS</p>
@@ -222,7 +226,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="alpine-a110-gts" aria-label="Přidat poukaz na Alpine A110 GTS"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="mercedes-amg-sl43" data-nazev="Den s Mercedes-AMG SL43" data-cena="5310" data-bezne="5590" data-foto="img/auta-mercedes-amg-sl43-800.webp">
+    <li class="auto" data-auto="mercedes-amg-sl43" data-kat="Kabriolet" data-nazev="Den s Mercedes-AMG SL43" data-cena="5310" data-bezne="5590" data-foto="img/auta-mercedes-amg-sl43-800.webp">
       <div class="auto__foto"><img src="img/auta-mercedes-amg-sl43-800.webp" srcset="img/auta-mercedes-amg-sl43-480.webp 480w, img/auta-mercedes-amg-sl43-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1129" height="565" alt="Mercedes-AMG SL43" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Mercedes-AMG</small>SL43</p>
@@ -230,7 +234,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="mercedes-amg-sl43" aria-label="Přidat poukaz na Mercedes-AMG SL43"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="bmw-m4-cabrio" data-nazev="Den s BMW M4 Cabrio" data-cena="5690" data-bezne="5990" data-foto="img/auta-bmw-m4-cabrio-800.webp">
+    <li class="auto" data-auto="bmw-m4-cabrio" data-kat="Kabriolet" data-nazev="Den s BMW M4 Cabrio" data-cena="5690" data-bezne="5990" data-foto="img/auta-bmw-m4-cabrio-800.webp">
       <div class="auto__foto"><img src="img/auta-bmw-m4-cabrio-800.webp" srcset="img/auta-bmw-m4-cabrio-480.webp 480w, img/auta-bmw-m4-cabrio-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1104" height="576" alt="BMW M4 Cabrio" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>BMW</small>M4 Cabrio</p>
@@ -238,7 +242,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="bmw-m4-cabrio" aria-label="Přidat poukaz na BMW M4 Cabrio"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="mercedes-amg-g63" data-nazev="Den s Mercedes-AMG G63" data-cena="9490" data-bezne="9990" data-foto="img/auta-mercedes-amg-g63-800.webp">
+    <li class="auto" data-auto="mercedes-amg-g63" data-kat="SUV" data-nazev="Den s Mercedes-AMG G63" data-cena="9490" data-bezne="9990" data-foto="img/auta-mercedes-amg-g63-800.webp">
       <div class="auto__foto"><img src="img/auta-mercedes-amg-g63-800.webp" srcset="img/auta-mercedes-amg-g63-480.webp 480w, img/auta-mercedes-amg-g63-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1161" height="677" alt="Mercedes-AMG G63" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Mercedes-AMG</small>G63</p>
@@ -246,7 +250,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="mercedes-amg-g63" aria-label="Přidat poukaz na Mercedes-AMG G63"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="bmw-m5" data-nazev="Den s BMW M5" data-cena="9490" data-bezne="9990" data-foto="img/auta-bmw-m5-800.webp">
+    <li class="auto" data-auto="bmw-m5" data-kat="Sportovní" data-nazev="Den s BMW M5" data-cena="9490" data-bezne="9990" data-foto="img/auta-bmw-m5-800.webp">
       <div class="auto__foto"><img src="img/auta-bmw-m5-800.webp" srcset="img/auta-bmw-m5-480.webp 480w, img/auta-bmw-m5-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1125" height="538" alt="BMW M5" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>BMW</small>M5</p>
@@ -254,7 +258,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="bmw-m5" aria-label="Přidat poukaz na BMW M5"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="audi-rs6" data-nazev="Den s Audi RS6" data-cena="10440" data-bezne="10990" data-foto="img/auta-audi-rs6-800.webp">
+    <li class="auto" data-auto="audi-rs6" data-kat="Sportovní" data-nazev="Den s Audi RS6" data-cena="10440" data-bezne="10990" data-foto="img/auta-audi-rs6-800.webp">
       <div class="auto__foto"><img src="img/auta-audi-rs6-800.webp" srcset="img/auta-audi-rs6-480.webp 480w, img/auta-audi-rs6-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1130" height="538" alt="Audi RS6" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Audi</small>RS6</p>
@@ -262,7 +266,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="audi-rs6" aria-label="Přidat poukaz na Audi RS6"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="c63-se" data-nazev="Den s Mercedes-AMG C63 S E Performance" data-cena="4550" data-bezne="4792" data-foto="img/auta-c63-se-800.webp">
+    <li class="auto" data-auto="c63-se" data-kat="Sportovní" data-nazev="Den s Mercedes-AMG C63 S E Performance" data-cena="4550" data-bezne="4792" data-foto="img/auta-c63-se-800.webp">
       <div class="auto__foto"><img src="img/auta-c63-se-800.webp" srcset="img/auta-c63-se-480.webp 480w, img/auta-c63-se-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1079" height="529" alt="Mercedes-AMG C63 S E Performance" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Mercedes-AMG</small>C63 S E Performance</p>
@@ -270,7 +274,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="c63-se" aria-label="Přidat poukaz na Mercedes-AMG C63 S E Performance"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="bmw-m3-competition" data-nazev="Den s BMW M3 Competition" data-cena="6640" data-bezne="6990" data-foto="img/auta-bmw-m3-competition-800.webp">
+    <li class="auto" data-auto="bmw-m3-competition" data-kat="Sportovní" data-nazev="Den s BMW M3 Competition" data-cena="6640" data-bezne="6990" data-foto="img/auta-bmw-m3-competition-800.webp">
       <div class="auto__foto"><img src="img/auta-bmw-m3-competition-800.webp" srcset="img/auta-bmw-m3-competition-480.webp 480w, img/auta-bmw-m3-competition-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1127" height="536" alt="BMW M3 Competition" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>BMW</small>M3 Competition</p>
@@ -278,7 +282,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="bmw-m3-competition" aria-label="Přidat poukaz na BMW M3 Competition"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="dodge-challenger" data-nazev="Den s Dodge Challenger" data-cena="3310" data-bezne="3490" data-foto="img/auta-dodge-challenger-800.webp">
+    <li class="auto" data-auto="dodge-challenger" data-kat="Sportovní" data-nazev="Den s Dodge Challenger" data-cena="3310" data-bezne="3490" data-foto="img/auta-dodge-challenger-800.webp">
       <div class="auto__foto"><img src="img/auta-dodge-challenger-800.webp" srcset="img/auta-dodge-challenger-480.webp 480w, img/auta-dodge-challenger-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1056" height="538" alt="Dodge Challenger" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Dodge</small>Challenger</p>
@@ -286,7 +290,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="dodge-challenger" aria-label="Přidat poukaz na Dodge Challenger"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="bmw-x6" data-nazev="Den s BMW X6" data-cena="5690" data-bezne="5990" data-foto="img/auta-bmw-x6-800.webp">
+    <li class="auto" data-auto="bmw-x6" data-kat="SUV" data-nazev="Den s BMW X6" data-cena="5690" data-bezne="5990" data-foto="img/auta-bmw-x6-800.webp">
       <div class="auto__foto"><img src="img/auta-bmw-x6-800.webp" srcset="img/auta-bmw-x6-480.webp 480w, img/auta-bmw-x6-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1088" height="575" alt="BMW X6" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>BMW</small>X6</p>
@@ -294,7 +298,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="bmw-x6" aria-label="Přidat poukaz na BMW X6"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="mercedes-c63" data-nazev="Den s Mercedes-AMG C63" data-cena="4740" data-bezne="4990" data-foto="img/auta-mercedes-c63-800.webp">
+    <li class="auto" data-auto="mercedes-c63" data-kat="Sportovní" data-nazev="Den s Mercedes-AMG C63" data-cena="4740" data-bezne="4990" data-foto="img/auta-mercedes-c63-800.webp">
       <div class="auto__foto"><img src="img/auta-mercedes-c63-800.webp" srcset="img/auta-mercedes-c63-480.webp 480w, img/auta-mercedes-c63-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1065" height="528" alt="Mercedes-AMG C63" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Mercedes-AMG</small>C63</p>
@@ -302,7 +306,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="mercedes-c63" aria-label="Přidat poukaz na Mercedes-AMG C63"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="volkswagen-golf-r" data-nazev="Den s Volkswagen Golf R" data-cena="4740" data-bezne="4990" data-foto="img/auta-volkswagen-golf-r-800.webp">
+    <li class="auto" data-auto="volkswagen-golf-r" data-kat="Sportovní" data-nazev="Den s Volkswagen Golf R" data-cena="4740" data-bezne="4990" data-foto="img/auta-volkswagen-golf-r-800.webp">
       <div class="auto__foto"><img src="img/auta-volkswagen-golf-r-800.webp" srcset="img/auta-volkswagen-golf-r-480.webp 480w, img/auta-volkswagen-golf-r-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1052" height="598" alt="Volkswagen Golf R" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Volkswagen</small>Golf R</p>
@@ -310,7 +314,7 @@
       </div>
       <button type="button" class="auto__pridat" data-pridat-auto="volkswagen-golf-r" aria-label="Přidat poukaz na Volkswagen Golf R"><span aria-hidden="true">+</span> Přidat poukaz</button>
     </li>
-    <li class="auto" data-auto="mercedes-a35-amg" data-nazev="Den s Mercedes-AMG A35" data-cena="5690" data-bezne="5990" data-foto="img/auta-mercedes-a35-amg-800.webp">
+    <li class="auto" data-auto="mercedes-a35-amg" data-kat="Sportovní" data-nazev="Den s Mercedes-AMG A35" data-cena="5690" data-bezne="5990" data-foto="img/auta-mercedes-a35-amg-800.webp">
       <div class="auto__foto"><img src="img/auta-mercedes-a35-amg-800.webp" srcset="img/auta-mercedes-a35-amg-480.webp 480w, img/auta-mercedes-a35-amg-800.webp 800w" sizes="(min-width: 64rem) 21rem, 72vw" width="1061" height="534" alt="Mercedes-AMG A35" loading="lazy" decoding="async"></div>
       <div class="auto__radek">
         <p><small>Mercedes-AMG</small>A35</p>
