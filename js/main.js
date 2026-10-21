@@ -96,7 +96,7 @@
 
   // položky v košíku: tři dárky jsou vždy vidět (i s nulou), ostatní se přidávají
   var polozky = ['sportovni', 'cybertruck', 'premiova'].map(function (kl) {
-    return Object.assign({}, katalog[kl], { pocet: kl === 'cybertruck' ? 10 : 0, pevna: true });
+    return Object.assign({}, katalog[kl], { pocet: 0, pevna: true });
   });
   var nahled = 'cybertruck';
 
