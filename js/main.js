@@ -76,11 +76,10 @@
   var slovo = function (n) { return n === 1 ? 'poukaz' : n < 5 ? 'poukazy' : 'poukazů'; };
 
   // adresu (a odesílatele) doplňuje edge funkce na Netlify; viditelné adresy sjednotíme s ní
-  var adresa = poptat.getAttribute('href').replace('mailto:', '').split('?')[0];
+  var adresa = (document.querySelector('[data-mail]') || { getAttribute: function () { return 'mailto:info@dreamrental-poukazy.eu'; } }).getAttribute('href').replace('mailto:', '').split('?')[0];
   document.querySelectorAll('[data-mail]').forEach(function (a) { a.textContent = a.getAttribute('href').replace('mailto:', '').split('?')[0]; });
-  // firma z osobního odkazu (/nazev-firmy) se rovnou propíše do poukazu
-  var zOdkazu = document.getElementById('firma-z-odkazu');
-  if (zOdkazu && zOdkazu.textContent.trim() && !f.firma.value) f.firma.value = zOdkazu.textContent.trim();
+  // z jakého osobního odkazu přišli (dreamrental-poukazy.eu/nazev-firmy), jde do poptávky
+  var odkaz = decodeURIComponent(location.pathname.replace(/^\/+|\/+$/g, '').replace(/index\.html$/, '')) || '(bez osobního odkazu)';
 
   // katalog: tři dárky z karet, auta z pásu flotily
   var katalog = {};
@@ -146,7 +145,7 @@
     return li;
   }
 
-  var posledniFoto = '', posledniText = '';
+  var posledniFoto = '', posledniText = '', souhrnPoptavky = {};
   function vykresli() {
     seznam.innerHTML = '';
     polozky.forEach(function (p) { seznam.appendChild(radek(p)); });
@@ -199,20 +198,68 @@
     poptat.classList.toggle('je-neaktivni', !kusu);
 
     // text poptávky do e-mailu
+    souhrnPoptavky = { kusu: kusu, celkem: kc(celkem).replace(/\u00a0/g, ' '),
+      radky: vybrane.map(function (p) { return p.pocet + ' × ' + p.nazev + ' (' + kc(p.cena) + ' za kus, celkem ' + kc(p.pocet * p.cena) + ')'; }).join('\n').replace(/\u00a0/g, ' ') };
     var text = ['Dobrý den,', '', 'máme zájem o firemní vánoční poukazy DREAMRENTAL:', '']
       .concat(vybrane.map(function (p) { return '• ' + p.pocet + ' × ' + p.nazev + ' (' + kc(p.cena) + ' za kus)'; }))
       .concat(['', 'Orientační cena celkem: ' + kc(celkem) + ' vč. DPH',
-        'Firma: ' + (f.firma.value.trim() || '(doplníme)'),
         'Věnování: ' + (f.venovani.value.trim() || '(doplníme)'),
-        '', 'Logo pošleme v příloze.', '', 'Děkujeme'])
+        '', 'Děkujeme'])
       .join('\n').replace(/ /g, ' ');
-    posledniText = text;
-    poptat.href = 'mailto:' + adresa + '?subject=' + encodeURIComponent('Firemní poukazy DREAMRENTAL – ' + kusu + ' ' + slovo(kusu)) + '&body=' + encodeURIComponent(text);
+    posledniText = 'mailto:' + adresa + '?subject=' + encodeURIComponent('Firemní poukazy DREAMRENTAL – ' + kusu + ' ' + slovo(kusu)) + '&body=' + encodeURIComponent(text);
   }
 
   f.addEventListener('input', function (e) { if (e.target.name === 'firma' || e.target.name === 'venovani') vykresli(); });
-  f.addEventListener('submit', function (e) { e.preventDefault(); });
-  poptat.addEventListener('click', function (e) { if (poptat.classList.contains('je-neaktivni')) e.preventDefault(); });
+  // ODESLÁNÍ: poptávka jde přes formuláře Netlify, Ondřejovi přijde e-mailem; když to selže, otevře se e-mail
+  var PRIJEM = 'https://dreamrental-poukazy.netlify.app/';
+  var chyba = f.querySelector('[data-chyba]');
+  var hotovo = f.querySelector('[data-hotovo]');
+  var souhrnBox = f.querySelector('.souhrn');
+  function ukazChybu(text, pole) {
+    chyba.textContent = text; chyba.hidden = !text;
+    if (pole) pole.focus();
+  }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!souhrnPoptavky.kusu) {
+      ukazChybu('');
+      seznam.classList.add('je-zablesk-seznam'); setTimeout(function () { seznam.classList.remove('je-zablesk-seznam'); }, 1600);
+      dojed('poukaz');
+      return;
+    }
+    if (!f.jmeno.value.trim()) return ukazChybu('Doplňte prosím jméno, ať víme, komu napsat.', f.jmeno);
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value.trim())) return ukazChybu('Zkontrolujte prosím e-mail, na ten vám pošleme nabídku.', f.email);
+    ukazChybu('');
+    var kdo = f.firma_kontakt.value.trim() || f.jmeno.value.trim();
+    var data = new URLSearchParams({
+      'form-name': 'poptavka', 'bot-field': '',
+      subject: 'Poptávka poukazů: ' + kdo + ' – ' + souhrnPoptavky.kusu + ' ks, ' + souhrnPoptavky.celkem,
+      jmeno: f.jmeno.value.trim(), firma: f.firma_kontakt.value.trim(), email: f.email.value.trim(), telefon: f.telefon.value.trim(),
+      poukazy: souhrnPoptavky.radky, celkem: souhrnPoptavky.celkem + ' vč. DPH (' + souhrnPoptavky.kusu + ' ks)',
+      venovani: f.venovani.value.trim(), na_poukaz_od: f.firma.value.trim(), poznamka: f.poznamka.value.trim(), odkaz: odkaz
+    });
+    poptat.disabled = true; poptat.classList.add('je-odesilani');
+    // poptávky přijímá Netlify (formulář „poptavka“); z jiné domény (GitHub Pages) se posílá bez čtení odpovědi
+    var naNetlify = /netlify\.app$/.test(location.hostname);
+    fetch(naNetlify ? '/' : PRIJEM, { method: 'POST', mode: naNetlify ? 'same-origin' : 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data.toString() })
+      .then(function (res) { if (naNetlify && !res.ok) throw new Error(res.status); })
+      .then(function () {
+        hotovo.querySelector('[data-hotovo-email]').textContent = f.email.value.trim();
+        souhrnBox.classList.add('je-odeslano'); hotovo.hidden = false; hotovo.focus();
+        if (window.plausible) window.plausible('Poptavka', { props: { kusu: String(souhrnPoptavky.kusu), celkem: souhrnPoptavky.celkem } });
+      })
+      .catch(function () {
+        ukazChybu('Odeslání se nepovedlo. Otevíráme e-mail s vyplněnou poptávkou, stačí ho odeslat.');
+        location.href = posledniText;
+      })
+      .then(function () { poptat.disabled = false; poptat.classList.remove('je-odesilani'); });
+  });
+  f.querySelector('[data-znovu]').addEventListener('click', function () {
+    souhrnBox.classList.remove('je-odeslano'); hotovo.hidden = true;
+    polozky.forEach(function (p) { p.pocet = 0; });
+    polozky = polozky.filter(function (p) { return p.pevna; });
+    vykresli(); dojed('poukaz');
+  });
 
 
   // VÝBĚR AUTA: okno s fotkami celé flotily, auta se přidávají rovnou tady
@@ -296,17 +343,6 @@
     b.addEventListener('click', function () { f.venovani.value = b.dataset.venovani; vykresli(); });
   });
 
-  // když se e-mail neotevře (webmail), poptávku si zkopírují
-  var kopie = document.getElementById('kopie');
-  if (kopie && navigator.clipboard) {
-    kopie.addEventListener('click', function () {
-      navigator.clipboard.writeText(posledniText).then(function () {
-        kopie.textContent = 'Zkopírováno. Vložte do e-mailu na ' + adresa;
-        kopie.classList.add('je-hotovo');
-      });
-    });
-  } else if (kopie) { kopie.hidden = true; }
-
   // logo jen do náhledu, nikam se neposílá
   f.logo.addEventListener('change', function () {
     var soubor = f.logo.files && f.logo.files[0];
@@ -339,6 +375,7 @@
     b.addEventListener('click', function () {
       var klic = b.dataset.pridatAuto === 'tesla-cybertruck' ? 'cybertruck' : b.dataset.pridatAuto;
       var p = pridej(klic);
+      if (window.plausible) window.plausible('Pridat auto', { props: { auto: p.nazev } });
       oznameni.firstChild.textContent = 'Přidáno: ' + p.nazev + ' (' + p.pocet + '×)';
       oznameni.hidden = false;
       requestAnimationFrame(function () { oznameni.classList.add('je-videt'); });

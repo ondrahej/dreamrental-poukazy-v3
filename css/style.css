@@ -805,3 +805,25 @@ html.je-okno{overflow:hidden}
 /* zvýraznění řádku po kliknutí na „Navrhnout tento poukaz“ */
 .polozka.je-zablesk{animation:zablesk 1.6s ease}
 @keyframes zablesk{0%,40%{box-shadow:inset 0 0 0 1px var(--ink),0 0 0 6px rgba(201,154,62,.35)}100%{box-shadow:inset 0 0 0 1px var(--ink),0 0 0 0 rgba(201,154,62,0)}}
+
+/* ===== v3.4: kontakt a odeslání poptávky ===== */
+.pole__nepovinne,.pole label small{font:400 .82rem/1 var(--f-t);color:var(--ink-3);margin-left:.35rem}
+.pole__dva{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pole__chyba{padding:.75rem 1rem;border-radius:var(--r-s);background:#fbeaea;color:#8a1c2c;font-size:.92rem}
+.vstup:has(input:user-invalid){border-color:#c0394f}
+.souhrn button.tlacitko{border:0}
+.tlacitko.je-odesilani{opacity:.7;cursor:progress}
+.tlacitko.je-odesilani .sipka{animation:tocit 1s linear infinite}
+@keyframes tocit{to{transform:rotate(360deg)}}
+.souhrn.je-odeslano > :not(.souhrn__hotovo){display:none}
+.souhrn__hotovo{display:grid;justify-items:center;text-align:center;gap:.55rem;padding:1.4rem .5rem .6rem;outline:none}
+.souhrn__fajfka{width:3.6rem;height:3.6rem;border-radius:50%;background:linear-gradient(180deg,#f8e2a8,var(--zlato-2)) ;position:relative;margin-bottom:.4rem;animation:fajfka .5s cubic-bezier(.2,.8,.2,1.4)}
+.souhrn__fajfka::before{content:"";position:absolute;inset:0;margin:auto;width:1.5rem;height:1.5rem;background:var(--ink);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 8.5 3.2 3L13 4.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 8.5 3.2 3L13 4.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+@keyframes fajfka{from{transform:scale(.4);opacity:0}}
+.souhrn__hotovo-nadpis{font:400 1.7rem/1.15 var(--f-d)}
+.souhrn__hotovo p:not(.souhrn__hotovo-nadpis){color:rgba(255,255,255,.78)}
+.souhrn__hotovo b{color:#fff;font-weight:500}
+.souhrn__hotovo .souhrn__kopie{justify-self:center}
+.polozky.je-zablesk-seznam{animation:zablesk-seznam 1.6s ease}
+@keyframes zablesk-seznam{0%,40%{box-shadow:0 0 0 6px rgba(201,154,62,.4);border-radius:var(--r-s)}100%{box-shadow:0 0 0 0 rgba(201,154,62,0)}}
+@media (max-width:40rem){.pole__dva{grid-template-columns:1fr}}
