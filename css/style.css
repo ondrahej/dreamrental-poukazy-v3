@@ -569,3 +569,140 @@ img.ceka{opacity:0!important}
   .karta__od span{font-size:5cqw}
   .karta__venovani{font-size:4.4cqw}
 }
+
+/* ===== v3.1: tři stejné karty dárků ===== */
+.darky__rada{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2vw,1.6rem);align-items:stretch;padding-top:1.4rem}
+.darky__rada .darek{grid-row:auto}
+.darky__rada .darek__foto,.darky__rada .darek--hlavni .darek__foto{flex:none;min-height:0;aspect-ratio:5/4;padding:3.4rem 1rem 7%;display:grid;place-items:end center}
+.darky__rada .darek__obal,.darky__rada .darek--hlavni .darek__obal,.darky__rada .darek:not(.darek--hlavni) .darek__obal{width:90%;max-width:none}
+.darky__rada .darek__text,.darky__rada .darek--hlavni .darek__text,.darky__rada .darek:not(.darek--hlavni) .darek__text{flex:1;display:flex;flex-direction:column;padding:.6rem 1.6rem 1.7rem}
+.darky__rada .darek h3,.darky__rada .darek--hlavni h3{font-size:clamp(1.45rem,1.1rem + .8vw,1.8rem);font-weight:400}
+.darky__rada .darek__auta{min-height:3.2em}
+.darky__rada .darek__cena,.darky__rada .darek:not(.darek--hlavni) .darek__cena{margin:1.3rem 0 1.5rem;display:flex;flex-direction:column;align-items:flex-start;gap:.45rem}
+.darky__rada .darek__kc,.darky__rada .darek--hlavni .darek__kc{font-size:clamp(2rem,1.6rem + 1vw,2.5rem)}
+.darky__rada .darek .tlacitko,.darky__rada .darek:not(.darek--hlavni) .tlacitko{margin-top:auto;width:100%;justify-content:space-between;font-size:1rem;min-height:3.25rem}
+.darky__rada .darek__odznak{top:1.1rem;left:1.1rem}
+.darky__rada .darek__sleva{top:1.1rem;right:1.1rem}
+/* zvýrazněný prostřední dárek: zlatý rámeček a o kus výš */
+.darky__rada .darek--hlavni{transform:translateY(-1.4rem);box-shadow:0 0 0 1.5px rgba(232,199,122,.85) inset,0 0 0 6px rgba(232,199,122,.14),0 50px 80px -40px rgba(13,20,48,.75)}
+.darky__rada .darek--hlavni:hover{transform:translateY(-1.8rem)}
+.darky__rada .darek--hlavni .tlacitko{background:linear-gradient(180deg,#f8e2a8,var(--zlato-2))}
+.darky__rada .darek--hlavni::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:4;box-shadow:0 0 0 1.5px rgba(232,199,122,.85) inset}
+
+/* ===== konfigurátor: seznam poukazů ===== */
+.pole__napoveda{font-size:.9rem;color:var(--ink-3);margin-top:-.4rem}
+.polozky{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.polozka{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:.6rem;padding:.45rem .55rem .45rem .45rem;border:1px solid var(--linka);border-radius:var(--r-s);background:#fff;transition:border-color .2s,box-shadow .2s}
+.polozka.je-vybrano{border-color:#cdb98f}
+.polozka.je-nahled{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.polozka:not(.je-vybrano){background:#fdfaf3}
+.polozka:not(.je-vybrano) .polozka__nahled img{opacity:.55}
+.polozka__nahled{display:flex;align-items:center;gap:.75rem;min-width:0;padding:.2rem;border:0;background:none;text-align:left;cursor:pointer;border-radius:10px}
+.polozka__nahled img{width:4.4rem;height:2.6rem;object-fit:contain;flex:none;border-radius:8px;background:radial-gradient(70% 70% at 50% 40%,#2c3f7a,#121a33);padding:.15rem .25rem;transition:opacity .2s}
+.polozka__nahled span{display:grid;min-width:0}
+.polozka__nahled b{font:500 1rem/1.2 var(--f-d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.polozka__nahled small{font-size:.82rem;color:var(--ink-3)}
+.polozka__pocet{display:inline-flex;align-items:center;border:1px solid var(--linka);border-radius:999px;background:#fff}
+.polozka__pocet button{width:2.5rem;height:2.5rem;border:0;background:none;border-radius:50%;font-size:1.2rem;cursor:pointer}
+.polozka__pocet button:hover{background:var(--krem-2)}
+.polozka__pocet input{width:2.6rem;border:0;background:none;text-align:center;font:500 1.05rem/1 var(--f-d);color:var(--ink);-moz-appearance:textfield;appearance:textfield;min-height:2.5rem}
+.polozka__pocet input::-webkit-inner-spin-button,.polozka__pocet input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.polozka__smazat{width:2.2rem;height:2.2rem;border:0;border-radius:50%;background:var(--krem-2);font-size:1.15rem;line-height:1;cursor:pointer;color:var(--ink-2)}
+.polozka__smazat:hover{background:var(--cervena);color:#fff}
+.polozka:not(:has(.polozka__smazat)){grid-template-columns:minmax(0,1fr) auto}
+.pridat{display:grid;gap:.8rem;padding-top:.9rem;border-top:1px dashed var(--linka)}
+.pole .pridat__radek{display:grid;gap:.4rem;font-size:.88rem;color:var(--ink-2)}
+.pridat__ovladani{display:flex;gap:.5rem}
+.pridat__ovladani .vstup{flex:1;min-width:0}
+.vstup--vyber select{flex:1;min-width:0;border:0;background:transparent;font:400 .98rem/1.3 var(--f-t);color:var(--ink);padding:.8rem 1rem;min-height:3rem;outline:none;cursor:pointer}
+.pridat__tlacitko{flex:none;border:0;border-radius:var(--r-s);background:var(--ink);color:#fff;font:500 .95rem/1 var(--f-d);padding:0 1.15rem;min-height:3rem;cursor:pointer}
+.pridat__tlacitko:hover{background:#262b36}
+.nahled-volby{display:flex;flex-wrap:wrap;justify-content:center;gap:.45rem;margin-top:1.6rem}
+.nahled-volby:empty{display:none}
+.nahled-volby button{border:1px solid var(--linka);background:#fffdf9;border-radius:999px;padding:.5rem .9rem;font:500 .85rem/1 var(--f-d);cursor:pointer;min-height:2.4rem}
+.nahled-volby button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.souhrn__polozky{list-style:none;margin:0 0 .4rem;padding:0 0 .8rem;border-bottom:1px solid rgba(255,255,255,.12);display:grid;gap:.35rem;font-size:.92rem;color:rgba(255,255,255,.78)}
+.souhrn__polozky:empty{display:none}
+.souhrn__polozky li{display:flex;justify-content:space-between;gap:1rem}
+.souhrn__polozky li span:last-child{white-space:nowrap;color:#fff}
+.tlacitko.je-neaktivni{opacity:.45;cursor:not-allowed}
+
+/* ===== flotila: cena a přidání ===== */
+.auto__radek{display:flex;justify-content:space-between;align-items:flex-end;gap:.75rem;padding:0 .35rem}
+.auto__radek p{padding:0}
+.auto__cena{font:400 .85rem/1.35 var(--f-t)!important;color:var(--ink-3);text-align:right;letter-spacing:0!important}
+.auto__cena b{display:block;font:500 1.05rem/1.2 var(--f-d);color:var(--ink)}
+.auto__cena s{display:block;font-size:.78rem}
+.auto__pridat{align-self:flex-start;display:inline-flex;align-items:center;gap:.45rem;margin:0 .35rem;min-height:2.6rem;padding:0 1rem 0 .8rem;border-radius:999px;border:1px solid var(--ink);background:transparent;font:500 .92rem/1 var(--f-d);color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.auto__pridat span{font-size:1.15rem;line-height:1}
+.auto__pridat:hover,.auto__pridat.je-pridano{background:var(--ink);color:#fff}
+.flotila__pozn{font-size:.88rem;color:var(--ink-3);max-width:34rem}
+.oznameni{position:fixed;left:50%;bottom:calc(1.25rem + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:1.1rem;max-width:calc(100% - 2rem);padding:.75rem .8rem .75rem 1.2rem;border-radius:999px;background:var(--ink);color:#fff;font:500 .95rem/1.3 var(--f-d);box-shadow:0 18px 40px -12px rgba(0,0,0,.5);transform:translate(-50%,1rem);opacity:0;transition:opacity .3s,transform .3s}
+.oznameni.je-videt{opacity:1;transform:translate(-50%,0)}
+.oznameni a{flex:none;background:#fff;color:var(--ink);text-decoration:none;border-radius:999px;padding:.55rem .95rem;font-size:.88rem}
+
+/* ===== recenze jako z Googlu ===== */
+.recenze{padding-left:0;padding-right:0;overflow:clip}
+.recenze__in{padding:0 var(--okraj)}
+.g-souhrn{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.3rem .9rem 1rem;border-radius:12px;background:#fff;border:1px solid #e3e3e3;box-shadow:0 1px 3px rgba(0,0,0,.08);text-decoration:none;font-family:Roboto,Arial,sans-serif;color:#202124;flex:none}
+.g-souhrn:hover{box-shadow:0 2px 8px rgba(0,0,0,.14)}
+.g-souhrn__text{display:grid;gap:.1rem}
+.g-souhrn__nazev{font-size:.95rem;font-weight:500}
+.g-souhrn__skore{display:flex;align-items:center;gap:.45rem}
+.g-souhrn__skore b{font-size:1.5rem;font-weight:500;color:#202124}
+.g-souhrn__hvezdy,.g-recenze__hvezdy{color:#fbbc04;letter-spacing:.04em}
+.g-souhrn__pocet{font-size:.82rem;color:#70757a}
+.g-pas{position:relative;overflow:hidden;padding:.5rem 0 1.5rem;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.g-stopa{display:flex;gap:1.1rem;width:max-content;animation:g-jizda 70s linear infinite}
+.g-pas:hover .g-stopa,.g-pas:focus-within .g-stopa{animation-play-state:paused}
+@keyframes g-jizda{to{transform:translateX(calc(-50% - .55rem))}}
+.g-recenze{width:clamp(17rem,24vw,21rem);flex:none;display:flex;flex-direction:column;gap:.55rem;padding:1.15rem 1.2rem 1.05rem;border-radius:12px;background:#fff;border:1px solid #e6e6e6;box-shadow:0 1px 2px rgba(60,64,67,.12),0 2px 6px rgba(60,64,67,.08);font-family:Roboto,Arial,sans-serif;color:#202124}
+.g-recenze header{display:flex;align-items:center;gap:.75rem}
+.g-recenze header img{width:40px;height:40px;border-radius:50%;flex:none}
+.g-recenze header div{display:grid;min-width:0;flex:1}
+.g-recenze header b{font-size:.95rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-recenze header span{font-size:.8rem;color:#70757a}
+.g-recenze__g{width:20px;height:20px;flex:none;align-self:flex-start}
+.g-recenze__hvezdy{font-size:1rem;line-height:1}
+.g-recenze__text{font-size:.9rem;line-height:1.5;color:#3c4043;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.g-recenze a{font-size:.82rem;color:#1a73e8;text-decoration:none;margin-top:.15rem}
+.g-recenze a:hover{text-decoration:underline}
+.recenze__pata{text-align:center;margin-top:.5rem;padding:0 var(--okraj)}
+
+@media (max-width:60rem){
+  .darky__rada{grid-template-columns:1fr;max-width:34rem;margin:0 auto;padding-top:0}
+  .darky__rada .darek--hlavni{order:-1;transform:none}
+  .darky__rada .darek--hlavni:hover{transform:translateY(-4px)}
+  .darky__rada .darek__auta{min-height:0}
+  .darky__rada .darek__foto{aspect-ratio:16/10}
+}
+@media (max-width:40rem){
+  .polozka{grid-template-columns:minmax(0,1fr) auto auto;gap:.35rem}
+  .polozka__nahled img{width:3.4rem;height:2.1rem}
+  .polozka__nahled b{font-size:.95rem;white-space:normal}
+  .polozka__pocet button{width:2.2rem;height:2.4rem}
+  .polozka__pocet input{width:2rem}
+  .recenze__hlava{gap:1.25rem}
+  .g-stopa{animation-duration:50s}
+  .oznameni{border-radius:18px;font-size:.9rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .g-pas{overflow-x:auto;-webkit-mask:none;mask:none}
+  .g-stopa{padding:0 var(--okraj)}
+  .g-stopa > [aria-hidden="true"]{display:none}
+}
+.darky__rada .darek__text,.darky__rada .darek:not(.darek--hlavni) .darek__text{align-items:stretch;text-align:left}
+.darky__rada .darek__cena,.darky__rada .darek:not(.darek--hlavni) .darek__cena{display:grid;justify-items:start;gap:.4rem}
+.darky__rada .darek__bezne{flex-basis:auto}
+.recenze__in{max-width:calc(var(--max) + 2*var(--okraj))}
+.polozka__nahled b{white-space:normal}
+@media (max-width:64rem){.poukaz__in{grid-template-columns:minmax(0,1fr)}}
+.formular,.pole,.pridat,.pridat__radek{min-width:0}
+.vstup--vyber select{width:100%;text-overflow:ellipsis}
+.vstup--kc input{-moz-appearance:textfield;appearance:textfield}
+.vstup--kc input::-webkit-inner-spin-button,.vstup--kc input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+@media (max-width:40rem){
+  .polozka__nahled img{display:none}
+  .polozka{padding-left:.75rem}
+  .oznameni{width:calc(100% - 2rem);justify-content:space-between}
+}
